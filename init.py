@@ -1,9 +1,98 @@
+import streamlit as st
+import pandas as pd
+import gspread
+from google.oauth2.service_account import Credentials
+from datetime import datetime
+
+SENHA_TABELA = "195967"
+SHEET_NAME = "Confirmacoes_Cha_Casa_Nova"
+
+# ================= CONEXÃO GOOGLE SHEETS =================
+
+scope = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive",
+]
+
+creds = Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=scope,
+)
+
+client = gspread.authorize(creds)
+sheet = client.open(SHEET_NAME).sheet1
+
+
+def load_data():
+    data = sheet.get_all_records()
+    if data:
+        return pd.DataFrame(data)
+    else:
+        return pd.DataFrame(columns=["Nome", "Acompanhantes", "Presente Reservado", "Data"])
+
+
+def add_confirmation(nome, acompanhantes):
+    data = datetime.now().strftime("%d/%m/%Y %H:%M")
+    sheet.append_row([nome, acompanhantes, "", data])
+
+
+def update_gift(nome, presente):
+    records = sheet.get_all_records()
+    for i, row in enumerate(records):
+        if row["Nome"] == nome:
+            sheet.update_cell(i + 2, 3, presente)
+            break
+
+
+# ================= SESSION =================
+
+if "page" not in st.session_state:
+    st.session_state.page = "home"
+if "name" not in st.session_state:
+    st.session_state.name = None
+if "selected_gift" not in st.session_state:
+    st.session_state.selected_gift = None
+if "show_pix_form" not in st.session_state:
+    st.session_state.show_pix_form = False
+
+# ============================================================================
+
+if st.session_state.page == "home":
+    st.title("Bem-vindo ao meu Chá de Casa Nova!")
+
+    name = st.text_input("Seu Nome completo")
+    companions = st.number_input("Quantos acompanhantes virão com você?", min_value=0, value=0, step=1)
+
+    if st.button("Confirmar Presença"):
+        name_clean = name.strip()
+        if name_clean:
+            df = load_data()
+            if name_clean in df["Nome"].values:
+                st.error("Este nome já foi cadastrado.")
+            else:
+                add_confirmation(name_clean, companions)
+                st.session_state.name = name_clean
+                st.session_state.page = "gifts"
+                st.rerun()
+        else:
+            st.error("Por favor, digite seu nome.")
+
+    df = load_data()
+    if not df.empty:
+        st.subheader("Área do anfitrião")
+
+        senha_input = st.text_input("Digite a senha", type="password")
+
+        if senha_input == SENHA_TABELA:
+            st.success("Acesso liberado!")
+            st.dataframe(df[["Nome", "Acompanhantes", "Presente Reservado", "Data"]])
+        elif senha_input:
+            st.error("Senha incorreta.")
+
+# ============================================================================
+
 elif st.session_state.page == "gifts":
     st.title("Sugestões de Presentes")
-    st.markdown(
-        "Se quiser ajudar a montar a casa, pode escolher algum item da lista abaixo "
-        "(para evitar repetidos). Ou contribua via Pix, se preferir."
-    )
 
     gifts = [
         ("Pix", None, None),
@@ -41,7 +130,7 @@ elif st.session_state.page == "gifts":
     df["Presente Reservado"] = df["Presente Reservado"].fillna("").astype(str).str.strip()
     reserved = set(df["Presente Reservado"][df["Presente Reservado"] != ""])
 
-    numero = 1  # contador para numerar presentes
+    numero = 1
 
     for title, price, url in gifts:
 
@@ -61,15 +150,34 @@ elif st.session_state.page == "gifts":
 
         if title != "Pix" and title in reserved:
             st.markdown("**🎁 Já reservado** 🔒")
-            st.caption("Alguém já escolheu esse item.")
         else:
             if title == "Pix":
                 if st.button("Quero contribuir via Pix", key="pix_btn"):
-                    st.session_state.show_pix_form = True
+                    st.session_state.page = "pix_thanks"
                     st.rerun()
             else:
-                if st.button("Quero reservar esse presente", key=f"want_{title}"):
-                    st.session_state.selected_gift = title
+                if st.button("Quero reservar esse presente", key=f"btn_{title}"):
+                    update_gift(st.session_state.name, title)
+                    st.session_state.page = "thanks"
                     st.rerun()
 
         st.markdown("---")
+
+# ============================================================================
+
+elif st.session_state.page == "thanks":
+    st.title("Muito obrigado mesmo! 🚀")
+    st.balloons()
+
+    if st.button("Voltar ao início"):
+        st.session_state.page = "home"
+        st.rerun()
+
+elif st.session_state.page == "pix_thanks":
+    st.title("Muito obrigado pela contribuição! 🙌")
+    st.code("444.858.688-00")
+    st.balloons()
+
+    if st.button("Voltar ao início"):
+        st.session_state.page = "home"
+        st.rerun()
