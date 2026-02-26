@@ -149,7 +149,6 @@ elif st.session_state.page == "gifts":
         ("Potes Organizadores", 99.90, "https://www.mercadolivre.com.br/kit-9-potes-hermeticos-vidro-tampa-bambu-p-cozinha-mm-house/up/MLBU3262864032"),
         ("Jogo de Taça", 99.90, "https://www.amazon.com.br/Cristal-Premium-Elegante-Transparente-Resist%C3%AAnte/dp/B0G1CSC4QM"),
         ("Sanduicheira", 99.00, "https://www.casasbahia.com.br/sanduicheira-grill-philco-pgr25a-antiaderente-750w-luz-indicadora-preto/p/55071723"),
-        ("Suporte Papel Higiênico", 78.90, "https://www.amazon.com.br/Suporte-Higi%C3%AAnico-Banheiro-Madeira-Rustico/dp/B0G1PQFZL8"),
         ("Mixer", 69.90, "https://www.amazon.com.br/Mixer-Brit%C3%A2nia-BMX350P-Preto-127V/dp/B097KP1641"),
         ("Kit 3 Escorredor de Macarrão", 59.90, "https://www.amazon.com.br/Escorredor-Macarr%C3%A3o-Alimentos-Vegetais-Multiuso/dp/B0DCPDZH2N"),
         ("Kit Pote Tempero", 56.99, "https://www.amazon.com.br/Kit-Herm%C3%A9ticos-200ml-Diversos-Armazenamentos/dp/B0B29JDBWL"),
@@ -160,6 +159,7 @@ elif st.session_state.page == "gifts":
         ("Kit Caipirinha", 44.90, "https://www.amazon.com.br/Caipirinha-Drinks-Coqueteleira-Dosador-Socador/dp/B09C6MZ2N8"),
         ("Escorredor de Louça Compacto", 39.70, "https://www.amazon.com.br/Escorredor-Lou%C3%A7as-Compacto-Linha-Trium/dp/B0C5RKCKXM"),
         ("Kit Utensílios de Silicone", 39.70, "https://www.amazon.com.br/Kit-Premium-Utens%C3%ADlios-Cozinha-Silicone/dp/B0F6YT4VHP"),
+        ("Suporte Papel Higiênico", 36.97, "https://www.amazon.com.br/Higi%C3%AAnico-Prateleira-Inoxid%C3%A1vel-Instala%C3%A7%C3%A3o-Banheiro/dp/B0F5C5M1LW/ref=asc_df_B0F5C5M1LW?mcid=93652418062336ddbd5d76dade158c7b&tag=googleshopp00-20&linkCode=df0&hvadid=715067048070&hvpos=&hvnetw=g&hvrand=1004044875430345428&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9197118&hvtargid=pla-2421703334158&psc=1&language=pt_BR&gad_source=1"),
         ("Kit Pano de Prato", 37.90, "https://www.amazon.com.br/Panos-Listrado-Felpudo-Cozinha-Algod%C3%A3o/dp/B0CH3QXD8V"),
     ]
 
