@@ -134,12 +134,13 @@ elif st.session_state.page == "gifts":
 
     gifts = [
         ("💰 Pix", None, None),
-        ("Cooktop de Indução 2 Bocas Preto com Trava de Segurança Painel Touch Screen", 489.90, "https://www.mercadolivre.com.br/cooktop-de-induco-2-bocas-preto-com-trava-de-seguranca-painel-touch-screen/p/MLB41647393"),
+        ("Cooktop de Indução 2 Bocas", 489.90, "https://www.mercadolivre.com.br/cooktop-de-induco-2-bocas-preto-com-trava-de-seguranca-painel-touch-screen/p/MLB41647393"),
         ("Air Fryer", 404.00, "https://www.mercadolivre.com.br/fritadeira-e-forno-style-oven-fry-10-litros-elgin-3-em1-cor-preto/p/MLB51323242"),
         ("Cama Box - Baú", 399.00, "https://www.mercadolivre.com.br/cama-box-bau-casal-44x138x188cm-couro-branco/p/MLB26186586?pdp_filters=item_id%3AMLB5333956296&from=gshop&matt_tool=68817901&matt_internal_campaign_id=&matt_word=&matt_source=google&matt_campaign_id=22090354478&matt_ad_group_id=173090608476&matt_match_type=&matt_network=g&matt_device=c&matt_creative=727882732953&matt_keyword=&matt_ad_position=&matt_ad_type=pla&matt_merchant_id=735098639&matt_product_id=MLB26186586-product&matt_product_partition_id=2392713115661&matt_target_id=aud-1966009190540:pla-2392713115661&cq_src=google_ads&cq_cmp=22090354478&cq_net=g&cq_plt=gp&cq_med=pla&gad_source=1&gad_campaignid=22090354478&gbraid=0AAAAAD93qcBrIEmxNa_tJjVCrTeAu2x8B&gclid=CjwKCAiA2PrMBhA4EiwAwpHyC4ITJoEOJN5ojKBdu_17iLURUlkF6bH3NBPwpEpAY9j6avTQyBMpohoCzUUQAvD_BwE#reviews"),
         ("Jogo de Cama", 287.90, "https://www.zelo.com.br/jogo-de-cama-zelo-hotel-casal-percal-400-fios-liso-p1000244"),
         ("Jogo De panelas", 251.99, "https://www.casasbahia.com.br/jogo-de-panela-de-inducao-7-pecas-fundo-triplo-e-revestimento-ceramico-mimo-style-marmol/p/1579632603"),
         ("Jogo Toalha", 199.00, "https://www.casadatoalha.com.br/products/jogo-de-toalha-essence-5-pecas-cor-off-grafite-gramatura-500g-m-100-algodao-confort-soft"),
+        ("Colcha Casal", 191.90, "https://www.casadatoalha.com.br/products/jogo-de-toalha-essence-5-pecas-cor-off-grafite-gramatura-500g-m-100-algodao-confort-soft"),
         ("Panela de Pressão", 189.91, "https://m.magazineluiza.com.br/panela-de-pressao-brinox-42l-bege-vanilla/p/237084500/ud/udpp/"),
         ("Jogo Travessa", 179.00, "https://www.westwing.com.br/jogo-de-travessa-maniglia-verde-retangular-328953.html"),
         ("Kit Churrasco", 132.99, "https://www.amazon.com.br/Pe%C3%A7as-Churrasco-Incluindo-Afiador-Armazenamento/dp/B0FLV5F9ZW"),
