@@ -191,7 +191,7 @@ elif st.session_state.page == "gifts":
                     pix_value = st.number_input(
                         "Valor (R$)",
                         min_value=0.01,
-                        value=50.00,
+                        value=0.00,
                         step=1.00,
                         format="%.2f",
                     )
