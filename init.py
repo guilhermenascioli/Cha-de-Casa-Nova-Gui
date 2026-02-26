@@ -253,13 +253,23 @@ elif st.session_state.page == "thanks":
 
     st.title("Muito obrigado mesmo! 🚀")
 
+    if "confirmed_gift" in st.session_state and st.session_state.confirmed_gift:
+
+        presente = st.session_state.confirmed_gift
+        st.subheader(f"🎁 Presente escolhido: {presente}")
+
+        if presente in gift_links:
+            st.markdown(f"[🔗 Ver produto novamente →]({gift_links[presente]})")
+
+        st.markdown("---")
+
     st.markdown("""
     Valeu demais por confirmar a presença e fazer parte dessa nova etapa da minha vida!
     Fico muito feliz de te receber e comemorar junto.
     Tô contando os dias! 🫂
     """)
 
-    st.subheader("Endereço para entrega")
+    st.subheader("Endereço para entrega (se for presente físico)")
 
     st.markdown("""
     **Estrada do Campo Limpo, 143 – Vila Prel**  
@@ -275,6 +285,7 @@ elif st.session_state.page == "thanks":
         st.session_state.page = "home"
         st.session_state.selected_gift = None
         st.session_state.show_pix_form = False
+        st.session_state.confirmed_gift = None
         st.rerun()
 
 
