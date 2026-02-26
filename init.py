@@ -192,7 +192,7 @@ elif st.session_state.page == "gifts":
                         "Valor (R$)",
                         min_value=0.00,
                         value=0.00,
-                        step=10.00,
+                        step=50.00,
                         format="%.2f",
                     )
 
