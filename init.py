@@ -1,21 +1,51 @@
 import streamlit as st
 import pandas as pd
-import os
+import gspread
+from google.oauth2.service_account import Credentials
+from datetime import datetime
 
-DATA_FILE = "confirmations.csv"
-SENHA_TABELA = "195967"  # Senha para ver a tabela
+SENHA_TABELA = "195967"
+SHEET_NAME = "Confirmacoes_Cha_Casa_Nova"
+
+# ================= CONEXÃO GOOGLE SHEETS =================
+
+scope = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive",
+]
+
+creds = Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=scope,
+)
+
+client = gspread.authorize(creds)
+sheet = client.open(SHEET_NAME).sheet1
+
 
 def load_data():
-    if os.path.exists(DATA_FILE):
-        try:
-            return pd.read_csv(DATA_FILE)
-        except Exception:
-            st.warning("Arquivo CSV corrompido. Criando novo.")
-    df = pd.DataFrame(columns=["Nome", "Acompanhantes", "Presente Reservado"])
-    df.to_csv(DATA_FILE, index=False)
-    return df
+    data = sheet.get_all_records()
+    if data:
+        return pd.DataFrame(data)
+    else:
+        return pd.DataFrame(columns=["Nome", "Acompanhantes", "Presente Reservado", "Data"])
 
-# Inicialização segura
+
+def add_confirmation(nome, acompanhantes):
+    data = datetime.now().strftime("%d/%m/%Y %H:%M")
+    sheet.append_row([nome, acompanhantes, "", data])
+
+
+def update_gift(nome, presente):
+    records = sheet.get_all_records()
+    for i, row in enumerate(records):
+        if row["Nome"] == nome:
+            sheet.update_cell(i + 2, 3, presente)
+            break
+
+
+# ================= SESSION =================
+
 if "page" not in st.session_state:
     st.session_state.page = "home"
 if "name" not in st.session_state:
@@ -26,6 +56,7 @@ if "show_pix_form" not in st.session_state:
     st.session_state.show_pix_form = False
 
 # ============================================================================
+
 if st.session_state.page == "home":
     st.title("Bem-vindo ao meu Chá de Casa Nova!")
     st.markdown("""
@@ -35,7 +66,7 @@ if st.session_state.page == "home":
 
     Se esse convite chegou até você é porque, de alguma forma, você fez parte da minha trajetória até aqui. Obrigado por isso. ❤️
 
-    Seja você alguém que tá sempre por perto ou alguém que cruzou meu caminho e deixou uma marca importante (tipo quem me deu a oportunidade no trabalho novo e tornou esse sonho possível), sua presença aqui seria muito especial.  
+    Seja você alguém que tá sempre por perto ou alguém que cruzou meu caminho e deixou uma marca importante, sua presença aqui seria muito especial.  
     Você importa pra mim, e ter você celebrando junto deixaria o dia ainda mais legal.
 
     Se der pra vir, vai ser incrível.  
@@ -54,9 +85,7 @@ if st.session_state.page == "home":
             if name_clean in df["Nome"].values:
                 st.error("Este nome já foi cadastrado. Use um nome diferente ou me chama no zap.")
             else:
-                new_row = {"Nome": name_clean, "Acompanhantes": companions, "Presente Reservado": ""}
-                df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
-                df.to_csv(DATA_FILE, index=False)
+                add_confirmation(name_clean, companions)
                 st.session_state.name = name_clean
                 st.session_state.page = "gifts"
                 st.rerun()
@@ -75,21 +104,14 @@ if st.session_state.page == "home":
 
         if senha_input == SENHA_TABELA:
             st.success("Acesso liberado!")
-            st.dataframe(df[["Nome", "Acompanhantes", "Presente Reservado"]])
-
-            csv = df.to_csv(index=False).encode("utf-8")
-            st.download_button(
-                label="Baixar lista completa (CSV)",
-                data=csv,
-                file_name="confirmados_cha_casa_nova.csv",
-                mime="text/csv",
-            )
+            st.dataframe(df[["Nome", "Acompanhantes", "Presente Reservado", "Data"]])
         elif senha_input:
             st.error("Senha incorreta.")
         else:
             st.info("Apenas o anfitrião pode ver a lista de confirmações.")
 
 # ============================================================================
+
 elif st.session_state.page == "gifts":
     st.title("Sugestões de Presentes")
     st.markdown(
@@ -119,8 +141,8 @@ elif st.session_state.page == "gifts":
     ]
 
     df = load_data()
-    df["Presente Reservado"] = df["Presente Reservado"].fillna('').astype(str).str.strip()
-    reserved = set(df["Presente Reservado"][df["Presente Reservado"] != ''])
+    df["Presente Reservado"] = df["Presente Reservado"].fillna("").astype(str).str.strip()
+    reserved = set(df["Presente Reservado"][df["Presente Reservado"] != ""])
 
     for title, price, url in gifts:
         st.markdown(f"### {title}")
@@ -144,21 +166,13 @@ elif st.session_state.page == "gifts":
 
                 if st.session_state.show_pix_form:
                     st.info("Ótimo! Qual valor você pretende enviar via Pix?")
-                    pix_value = st.number_input(
-                        "Valor (R$)",
-                        min_value=0.01,
-                        value=50.00,
-                        step=1.00,
-                        format="%.2f"
-                    )
+                    pix_value = st.number_input("Valor (R$)", min_value=0.01, value=50.00, step=1.00, format="%.2f")
 
                     col1, col2 = st.columns(2)
 
                     with col1:
                         if st.button("✅ Confirmar contribuição", type="primary"):
-                            df = load_data()
-                            df.loc[df["Nome"] == st.session_state.name, "Presente Reservado"] = f"Pix - R$ {pix_value:,.2f}"
-                            df.to_csv(DATA_FILE, index=False)
+                            update_gift(st.session_state.name, f"Pix - R$ {pix_value:,.2f}")
                             st.session_state.show_pix_form = False
                             st.session_state.page = "pix_thanks"
                             st.rerun()
@@ -184,9 +198,7 @@ elif st.session_state.page == "gifts":
 
             with col1:
                 if st.button("✅ Confirmar reserva", type="primary", key=f"conf_{title}"):
-                    df = load_data()
-                    df.loc[df["Nome"] == st.session_state.name, "Presente Reservado"] = title
-                    df.to_csv(DATA_FILE, index=False)
+                    update_gift(st.session_state.name, title)
                     st.session_state.page = "thanks"
                     st.session_state.selected_gift = None
                     st.rerun()
@@ -205,6 +217,7 @@ elif st.session_state.page == "gifts":
         st.rerun()
 
 # ============================================================================
+
 elif st.session_state.page == "thanks":
     st.title("Muito obrigado mesmo! 🚀")
     st.markdown("""
@@ -229,6 +242,7 @@ elif st.session_state.page == "thanks":
         st.rerun()
 
 # ============================================================================
+
 elif st.session_state.page == "pix_thanks":
     st.title("Muito obrigado pela contribuição! 🙌")
     st.markdown("""
