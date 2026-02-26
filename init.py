@@ -259,7 +259,7 @@ elif st.session_state.page == "thanks":
     Tô contando os dias! 🫂
     """)
 
-    st.subheader("Endereço para entrega (se for presente físico)")
+    st.subheader("Endereço para entrega")
 
     st.markdown("""
     **Estrada do Campo Limpo, 143 – Vila Prel**  
