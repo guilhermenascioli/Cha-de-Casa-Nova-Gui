@@ -162,9 +162,15 @@ elif st.session_state.page == "gifts":
     df["Presente Reservado"] = df["Presente Reservado"].fillna("").astype(str).str.strip()
     reserved = set(df["Presente Reservado"][df["Presente Reservado"] != ""])
 
+    gift_number = 1
+
     for title, price, url in gifts:
 
-        st.markdown(f"### {title}")
+        if title == "Pix":
+            st.markdown("### 💰 Pix")
+        else:
+            st.markdown(f"### {gift_number}. {title}")
+            gift_number += 1
 
         if price is not None:
             st.markdown(f"**Preço: R$ {price:,.2f}**")
@@ -239,64 +245,3 @@ elif st.session_state.page == "gifts":
                             st.rerun()
 
         st.markdown("---")
-
-    if st.button("→ Continuar sem reservar presente", type="secondary"):
-        st.session_state.page = "thanks"
-        st.session_state.selected_gift = None
-        st.session_state.show_pix_form = False
-        st.rerun()
-
-
-# ============================================================================
-elif st.session_state.page == "thanks":
-
-    st.title("Muito obrigado mesmo! 🚀")
-
-    st.markdown("""
-Valeu demais por confirmar a presença e fazer parte dessa nova etapa da minha vida!
-Fico muito feliz de te receber e comemorar junto.
-Tô contando os dias! 🫂
-""")
-
-    st.subheader("Endereço para entrega (se for presente físico)")
-
-    st.markdown("""
-**Estrada do Campo Limpo, 143 – Vila Prel**  
-São Paulo – SP – 05777-001  
-Apto 105 Fun
-""")
-
-    st.markdown("[Falar comigo no WhatsApp →](https://w.app/4qrasc)")
-
-    st.balloons()
-
-    if st.button("Voltar ao início"):
-        st.session_state.page = "home"
-        st.session_state.selected_gift = None
-        st.session_state.show_pix_form = False
-        st.rerun()
-
-
-# ============================================================================
-elif st.session_state.page == "pix_thanks":
-
-    st.title("Muito obrigado pela contribuição! 🙌")
-
-    st.markdown("""
-Agradeço de coração pela ajuda via Pix.
-Vai fazer muita diferença na montagem da casa nova. ❤️
-""")
-
-    st.subheader("Chave Pix")
-    st.code("444.858.688-00", language=None)
-    st.caption("CPF – Guilherme")
-
-    st.markdown("[Falar comigo no WhatsApp →](https://w.app/4qrasc)")
-
-    st.balloons()
-
-    if st.button("Voltar ao início"):
-        st.session_state.page = "home"
-        st.session_state.selected_gift = None
-        st.session_state.show_pix_form = False
-        st.rerun()
