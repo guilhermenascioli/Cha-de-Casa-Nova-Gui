@@ -249,7 +249,7 @@ elif st.session_state.page == "gifts":
 
 
 # ============================================================================
-elif st.session_state.pagina == "thanks":
+elif st.session_state.pagina == "agradecimentos":
 
     st.markdown("## Muito obrigado mesmo! 🚀")
 
