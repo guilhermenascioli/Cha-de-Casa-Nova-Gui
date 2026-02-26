@@ -249,44 +249,33 @@ elif st.session_state.page == "gifts":
 
 
 # ============================================================================
-elif st.session_state.pagina == "agradecimentos":
+elif st.session_state.page == "thanks":
 
-    st.markdown("## Muito obrigado mesmo! 🚀")
+    st.title("Muito obrigado mesmo! 🚀")
 
-    st.write(
-        "Valeu demais por confirmar a presença e fazer parte dessa nova etapa da minha vida! "
-        "Fico muito feliz de te receber e comemorar junto. Tô contando os dias! 🎉"
-    )
+    st.markdown("""
+    Valeu demais por confirmar a presença e fazer parte dessa nova etapa da minha vida!
+    Fico muito feliz de te receber e comemorar junto.
+    Tô contando os dias! 🫂
+    """)
 
-    # Puxar presente escolhido
-    presente_escolhido = st.session_state.get("presente_escolhido")
+    st.subheader("Endereço para entrega (se for presente físico)")
 
-    if presente_escolhido:
+    st.markdown("""
+    **Estrada do Campo Limpo, 143 – Vila Prel**  
+    São Paulo – SP – 05777-001  
+    Apto 105 Fun
+    """)
 
-        nome_presente = presente_escolhido["nome"]
-        link_presente = presente_escolhido["link"]
+    st.markdown("[Falar comigo no WhatsApp →](https://w.app/4qrasc)")
 
-        st.markdown("### 🎁 Presente escolhido:")
-        st.write(f"**{nome_presente}**")
-
-        st.markdown("### 🔗 Link do produto:")
-        st.markdown(f"[Clique aqui para acessar o produto]({link_presente})")
-
-    st.markdown("---")
-
-    st.markdown("## 📦 Endereço para entrega (se for presente físico)")
-
-    st.write("Estrada do Campo Limpo, 143 – Vila Prel")
-    st.write("São Paulo – SP – 05777-001")
-    st.write("Apto 105 Fun")
-
-    st.markdown("")
-
-    st.markdown("[💬 Falar comigo no WhatsApp →](https://wa.me/5511999999999)")
+    st.balloons()
 
     if st.button("Voltar ao início"):
-        st.session_state.pagina = "inicio"_
-
+        st.session_state.page = "home"
+        st.session_state.selected_gift = None
+        st.session_state.show_pix_form = False
+        st.rerun()
 
 
 # ============================================================================
