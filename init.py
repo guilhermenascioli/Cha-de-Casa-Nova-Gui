@@ -249,44 +249,44 @@ elif st.session_state.page == "gifts":
 
 
 # ============================================================================
-elif st.session_state.page == "thanks":
+elif st.session_state.pagina == "thanks":
 
-    st.title("Muito obrigado mesmo! 🚀")
+    st.markdown("## Muito obrigado mesmo! 🚀")
 
-    if "confirmed_gift" in st.session_state and st.session_state.confirmed_gift:
+    st.write(
+        "Valeu demais por confirmar a presença e fazer parte dessa nova etapa da minha vida! "
+        "Fico muito feliz de te receber e comemorar junto. Tô contando os dias! 🎉"
+    )
 
-        presente = st.session_state.confirmed_gift
-        st.subheader(f"🎁 Presente escolhido: {presente}")
+    # Puxar presente escolhido
+    presente_escolhido = st.session_state.get("presente_escolhido")
 
-        if presente in gift_links:
-            st.markdown(f"[🔗 Ver produto novamente →]({gift_links[presente]})")
+    if presente_escolhido:
 
-        st.markdown("---")
+        nome_presente = presente_escolhido["nome"]
+        link_presente = presente_escolhido["link"]
 
-    st.markdown("""
-    Valeu demais por confirmar a presença e fazer parte dessa nova etapa da minha vida!
-    Fico muito feliz de te receber e comemorar junto.
-    Tô contando os dias! 🫂
-    """)
+        st.markdown("### 🎁 Presente escolhido:")
+        st.write(f"**{nome_presente}**")
 
-    st.subheader("Endereço para entrega (se for presente físico)")
+        st.markdown("### 🔗 Link do produto:")
+        st.markdown(f"[Clique aqui para acessar o produto]({link_presente})")
 
-    st.markdown("""
-    **Estrada do Campo Limpo, 143 – Vila Prel**  
-    São Paulo – SP – 05777-001  
-    Apto 105 Fun
-    """)
+    st.markdown("---")
 
-    st.markdown("[Falar comigo no WhatsApp →](https://w.app/4qrasc)")
+    st.markdown("## 📦 Endereço para entrega (se for presente físico)")
 
-    st.balloons()
+    st.write("Estrada do Campo Limpo, 143 – Vila Prel")
+    st.write("São Paulo – SP – 05777-001")
+    st.write("Apto 105 Fun")
+
+    st.markdown("")
+
+    st.markdown("[💬 Falar comigo no WhatsApp →](https://wa.me/5511999999999)")
 
     if st.button("Voltar ao início"):
-        st.session_state.page = "home"
-        st.session_state.selected_gift = None
-        st.session_state.show_pix_form = False
-        st.session_state.confirmed_gift = None
-        st.rerun()
+        st.session_state.pagina = "inicio"_
+
 
 
 # ============================================================================
