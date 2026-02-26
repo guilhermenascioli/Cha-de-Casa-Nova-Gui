@@ -259,15 +259,22 @@ elif st.session_state.page == "thanks":
     Tô contando os dias! 🫂
     """)
 
-    # 🔗 BOTÃO PARA VER O LINK DO PRESENTE NOVAMENTE
-    if st.session_state.selected_gift is not None:
-        if "link" in st.session_state.selected_gift:
+    # DEBUG VISUAL (pode apagar depois)
+    # st.write(st.session_state)
+
+    # 🔗 Mostrar presente se existir
+    if "selected_gift" in st.session_state and st.session_state.selected_gift:
+
+        gift = st.session_state.selected_gift
+
+        if isinstance(gift, dict) and "link" in gift:
+
             st.markdown("### 🎁 Seu presente escolhido:")
-            st.write(f"**{st.session_state.selected_gift['name']}**")
+            st.write(f"**{gift.get('name', gift.get('nome', 'Presente'))}**")
 
             st.link_button(
                 "🔗 Ver link do presente novamente",
-                st.session_state.selected_gift["link"]
+                gift["link"]
             )
 
     st.subheader("Endereço para entrega (se for presente físico)")
@@ -287,7 +294,6 @@ elif st.session_state.page == "thanks":
         st.session_state.selected_gift = None
         st.session_state.show_pix_form = False
         st.rerun()
-
 
 
 # ============================================================================
