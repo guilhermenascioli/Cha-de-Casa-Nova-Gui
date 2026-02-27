@@ -112,6 +112,9 @@ gifts = [
 if "page" not in st.session_state:
     st.session_state.page = "home"
 
+if "presente_selecionado" not in st.session_state:
+    st.session_state.presente_selecionado = None
+
 # ================= HOME =================
 
 if st.session_state.page == "home":
@@ -148,23 +151,22 @@ Sua presença será muito especial!
     if st.button("Não poderei ir"):
         st.success("Obrigado por avisar 💛")
 
-    st.divider()
-
-    st.subheader("Ver lista de confirmados")
-    senha = st.text_input("Senha", type="password")
-
-    if senha == SENHA_LISTA:
-        dados = sheet.get_all_records()
-        df = pd.DataFrame(dados)
-        st.dataframe(df)
-
 # ================= GIFTS =================
 
 elif st.session_state.page == "gifts":
 
     st.title("Escolha um presente 🎁")
 
+    dados = sheet.get_all_records()
+    df_reservas = pd.DataFrame(dados)
+
+    presentes_reservados = []
+    if not df_reservas.empty and "Presente" in df_reservas.columns:
+        presentes_reservados = df_reservas["Presente"].tolist()
+
     for nome, valor, link in gifts:
+
+        reservado = nome in presentes_reservados
 
         st.markdown('<div class="presente-card">', unsafe_allow_html=True)
 
@@ -176,18 +178,31 @@ elif st.session_state.page == "gifts":
             st.markdown(f"### {nome}")
             st.markdown("Escolha qualquer valor 💛")
 
-        if st.button(f"Reservar {nome}", key=nome):
+        if reservado:
+            st.error("❌ Já reservado")
+        else:
+            if st.session_state.presente_selecionado == nome:
 
-            sheet.append_row([
-                st.session_state.nome,
-                st.session_state.acompanhante,
-                st.session_state.presenca,
-                nome,
-                datetime.now().strftime("%d/%m/%Y %H:%M")
-            ])
+                st.warning("Clique abaixo para confirmar a reserva")
 
-            st.session_state.page = "thanks"
-            st.rerun()
+                if st.button(f"Confirmar reserva de {nome}", key=f"confirmar_{nome}"):
+
+                    sheet.append_row([
+                        st.session_state.nome,
+                        st.session_state.acompanhante,
+                        st.session_state.presenca,
+                        nome,
+                        datetime.now().strftime("%d/%m/%Y %H:%M")
+                    ])
+
+                    st.session_state.presente_selecionado = None
+                    st.session_state.page = "thanks"
+                    st.rerun()
+
+            else:
+                if st.button(f"Reservar {nome}", key=nome):
+                    st.session_state.presente_selecionado = nome
+                    st.rerun()
 
         st.markdown('</div>', unsafe_allow_html=True)
 
