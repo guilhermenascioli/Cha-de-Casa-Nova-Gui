@@ -16,7 +16,18 @@ st.set_page_config(page_title="Chá de Casa Nova", layout="centered")
 st.markdown("""
 <style>
 body {
-    background-color: #f8f6f3;
+    background-color: #0e1117;
+    color: white;
+}
+
+.stTextInput>div>div>input {
+    background-color: #262730;
+    color: white;
+}
+
+.stNumberInput>div>div>input {
+    background-color: #262730;
+    color: white;
 }
 
 .stButton>button {
@@ -35,15 +46,11 @@ body {
     color: white;
 }
 
-.block-container {
-    padding-top: 2rem;
-}
-
 .presente-card {
     padding: 18px;
     border-radius: 16px;
-    background-color: white;
-    box-shadow: 0px 4px 20px rgba(0,0,0,0.05);
+    background-color: #1c1f26;
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.4);
     margin-bottom: 15px;
 }
 </style>
@@ -151,4 +158,58 @@ Sua presença será muito especial!
         df = pd.DataFrame(dados)
         st.dataframe(df)
 
-# ================= RESTANTE DO CÓDIGO PERMANECE IDÊNTICO =================
+# ================= GIFTS =================
+
+elif st.session_state.page == "gifts":
+
+    st.title("Escolha um presente 🎁")
+
+    for nome, valor, link in gifts:
+
+        st.markdown('<div class="presente-card">', unsafe_allow_html=True)
+
+        if valor:
+            st.markdown(f"### {nome}")
+            st.markdown(f"💲 R$ {valor:.2f}")
+            st.markdown(f"[Ver produto]({link})")
+        else:
+            st.markdown(f"### {nome}")
+            st.markdown("Escolha qualquer valor 💛")
+
+        if st.button(f"Reservar {nome}", key=nome):
+
+            sheet.append_row([
+                st.session_state.nome,
+                st.session_state.acompanhante,
+                st.session_state.presenca,
+                nome,
+                datetime.now().strftime("%d/%m/%Y %H:%M")
+            ])
+
+            st.session_state.page = "thanks"
+            st.rerun()
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+# ================= THANKS =================
+
+elif st.session_state.page == "thanks":
+
+    st.title("Muito obrigado mesmo! 🚀")
+    st.markdown("""
+Valeu demais por confirmar a presença e fazer parte dessa nova etapa da minha vida!
+Fico muito feliz de te receber e comemorar junto.
+Tô contando os dias! 🫂
+    """)
+    st.subheader("Endereço para entrega (se for presente físico)")
+    st.markdown("""
+**Estrada do Campo Limpo, 143 – Vila Prel**  
+São Paulo – SP – 05777-001  
+Apto 105 Fun
+    """)
+    st.markdown("[Falar comigo no WhatsApp →](https://w.app/4qrasc)")
+    st.balloons()
+
+    if st.button("Voltar ao início"):
+        st.session_state.page = "home"
+        st.rerun()
