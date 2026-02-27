@@ -107,7 +107,7 @@ gifts = [
     ("Kit Pano de Prato", 37.90, "https://www.amazon.com.br/Panos-Listrado-Felpudo-Cozinha-Algodão"),
 ]
 
-# ================= CONTROLE DE PÁGINAS =================
+# ================= CONTROLE =================
 
 if "page" not in st.session_state:
     st.session_state.page = "home"
@@ -151,6 +151,16 @@ Sua presença será muito especial!
     if st.button("Não poderei ir"):
         st.success("Obrigado por avisar 💛")
 
+    st.divider()
+
+    st.subheader("Ver lista de confirmados")
+    senha = st.text_input("Senha", type="password")
+
+    if senha == SENHA_LISTA:
+        dados = sheet.get_all_records()
+        df = pd.DataFrame(dados)
+        st.dataframe(df)
+
 # ================= GIFTS =================
 
 elif st.session_state.page == "gifts":
@@ -158,11 +168,11 @@ elif st.session_state.page == "gifts":
     st.title("Escolha um presente 🎁")
 
     dados = sheet.get_all_records()
-    df_reservas = pd.DataFrame(dados)
+    df = pd.DataFrame(dados)
 
     presentes_reservados = []
-    if not df_reservas.empty and "Presente" in df_reservas.columns:
-        presentes_reservados = df_reservas["Presente"].tolist()
+    if not df.empty and "Presente Reservado" in df.columns:
+        presentes_reservados = df["Presente Reservado"].tolist()
 
     for nome, valor, link in gifts:
 
@@ -183,21 +193,26 @@ elif st.session_state.page == "gifts":
         else:
             if st.session_state.presente_selecionado == nome:
 
-                st.warning("Clique abaixo para confirmar a reserva")
-
                 if st.button(f"Confirmar reserva de {nome}", key=f"confirmar_{nome}"):
 
-                    sheet.append_row([
-                        st.session_state.nome,
-                        st.session_state.acompanhante,
-                        st.session_state.presenca,
-                        nome,
-                        datetime.now().strftime("%d/%m/%Y %H:%M")
-                    ])
+                    # 🔒 Verificação final antes de gravar
+                    dados_atualizados = sheet.get_all_records()
+                    df_check = pd.DataFrame(dados_atualizados)
 
-                    st.session_state.presente_selecionado = None
-                    st.session_state.page = "thanks"
-                    st.rerun()
+                    if not df_check.empty and nome in df_check.get("Presente Reservado", []).values:
+                        st.error("Esse presente acabou de ser reservado por outra pessoa 😢")
+                    else:
+                        sheet.append_row([
+                            st.session_state.nome,
+                            st.session_state.acompanhante,
+                            st.session_state.presenca,
+                            nome,
+                            datetime.now().strftime("%d/%m/%Y %H:%M")
+                        ])
+
+                        st.session_state.presente_selecionado = None
+                        st.session_state.page = "thanks"
+                        st.rerun()
 
             else:
                 if st.button(f"Reservar {nome}", key=nome):
@@ -216,12 +231,14 @@ Valeu demais por confirmar a presença e fazer parte dessa nova etapa da minha v
 Fico muito feliz de te receber e comemorar junto.
 Tô contando os dias! 🫂
     """)
+
     st.subheader("Endereço para entrega (se for presente físico)")
     st.markdown("""
 **Estrada do Campo Limpo, 143 – Vila Prel**  
 São Paulo – SP – 05777-001  
 Apto 105 Fun
     """)
+
     st.markdown("[Falar comigo no WhatsApp →](https://w.app/4qrasc)")
     st.balloons()
 
