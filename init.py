@@ -46,13 +46,11 @@ body {
     color: white;
 }
 
-/* BOTÃO CONFIRMAR RESERVA */
 button[kind="secondary"] {
     background-color: #16a34a !important;
     color: white !important;
 }
 
-/* BOTÃO NÃO VOU */
 button[kind="primary"] {
     background-color: #dc2626 !important;
     color: white !important;
@@ -89,7 +87,34 @@ gifts = [
     ("💰 Pix", None, None),
     ("Cooktop de Indução 2 Bocas", 489.90, "https://www.mercadolivre.com.br/cooktop-de-induco-2-bocas-preto-com-trava-de-seguranca-painel-touch-screen/p/MLB41647393"),
     ("Air Fryer", 404.00, "https://www.mercadolivre.com.br/fritadeira-e-forno-style-oven-fry-10-litros-elgin-3-em1-cor-preto/p/MLB51323242"),
-    # restante mantido igual...
+    ("Cama Box - Baú", 399.00, "https://www.mercadolivre.com.br/cama-box-bau-casal-44x138x188cm-couro-branco/p/MLB26186586"),
+    ("Jogo de Cama", 287.90, "https://www.zelo.com.br/jogo-de-cama-zelo-hotel-casal-percal-400-fios-liso-p1000244"),
+    ("Jogo De panelas", 251.99, "https://www.casasbahia.com.br/jogo-de-panela-de-inducao-7-pecas"),
+    ("Jogo Toalha", 199.00, "https://www.casadatoalha.com.br/products/jogo-de-toalha-essence-5-pecas-cor-off-grafite"),
+    ("Colcha Casal", 191.90, "https://www.zelo.com.br/colcha-chamonix-casal-com-2-porta-travesseiros"),
+    ("Panela de Pressão", 189.91, "https://m.magazineluiza.com.br/panela-de-pressao-brinox-42l-bege-vanilla"),
+    ("Jogo Travessa", 179.00, "https://www.westwing.com.br/jogo-de-travessa-maniglia-verde-328953.html"),
+    ("Kit Churrasco", 132.99, "https://www.amazon.com.br/Pe%C3%A7as-Churrasco-Incluindo-Afiador"),
+    ("Liquidificador", 113.05, "https://www.casasbahia.com.br/liquidificador-philco-ph900-preto"),
+    ("Jogo de Lençol Cinza", 115.10, "https://www.zelo.com.br/jogo-de-cama-microfibra-casal"),
+    ("Jogo de Lençol Linho", 115.10, "https://www.zelo.com.br/jogo-de-cama-microfibra-casal"),
+    ("Panela de Arroz", 107.91, "https://www.magazineluiza.com.br/panela-de-arroz-britania"),
+    ("Potes Organizadores", 99.90, "https://www.mercadolivre.com.br/kit-9-potes-hermeticos"),
+    ("Jogo de Taça", 99.90, "https://www.amazon.com.br/Cristal-Premium-Elegante"),
+    ("Sanduicheira", 99.00, "https://www.casasbahia.com.br/sanduicheira-grill-philco-pgr25a"),
+    ("Escorredor de Louça", 83.35, "https://www.amazon.com.br/Escorredor-Loucas-Flat-Coza"),
+    ("Cobertor", 82.10, "https://shopee.com.br/product/1572699366"),
+    ("Mixer", 69.90, "https://www.amazon.com.br/Mixer-Brit%C3%A2nia-BMX350P"),
+    ("Kit 3 Escorredor de Macarrão", 59.90, "https://www.amazon.com.br/Escorredor-Macarr%C3%A3o-Alimentos"),
+    ("Kit Pote Tempero", 56.99, "https://www.amazon.com.br/Kit-Herm%C3%A9ticos-200ml"),
+    ("Nicho de Parede Sobrepor", 54.00, "https://www.amazon.com.br/Sobrepor-28cmx40cm-Arquitech"),
+    ("Kit Utensílios Inox de Cozinha", 49.98, "https://www.amazon.com.br/Kit-Utens%C3%ADlios-Inox-Cozinha-Gourmet"),
+    ("Jarra de vidro", 49.92, "https://www.amazon.com.br/Diamond-Jarra-Sodo-C%C3%A1lcico"),
+    ("Kit Abridor de Vinho", 48.90, "https://www.amazon.com.br/ABRIDOR-EL%C3%89TRICO-ACESS%C3%93RIOS"),
+    ("Kit Caipirinha", 44.90, "https://www.amazon.com.br/Caipirinha-Drinks-Coqueteleira"),
+    ("Kit Utensílios de Silicone", 39.70, "https://www.amazon.com.br/Kit-Premium-Utens%C3%ADlios-Cozinha-Silicone"),
+    ("Suporte Papel Higiênico", 36.97, "https://www.amazon.com.br/Higi%C3%AAnico-Prateleira-Inoxid%C3%A1vel"),
+    ("Kit Pano de Prato", 37.90, "https://www.amazon.com.br/Panos-Listrado-Felpudo-Cozinha-Algodão"),
 ]
 
 # ================= CONTROLE =================
@@ -139,7 +164,6 @@ Sua presença será muito especial!
 
     with col3:
         if st.button("❌ Não poderei ir", type="primary"):
-
             sheet.append_row([
                 nome,
                 acompanhantes,
@@ -147,7 +171,6 @@ Sua presença será muito especial!
                 "Não irá",
                 datetime.now().strftime("%d/%m/%Y %H:%M")
             ])
-
             st.success("Obrigado por avisar 💛")
 
     st.divider()
@@ -175,49 +198,67 @@ elif st.session_state.page == "gifts":
 
     for nome, valor, link in gifts:
 
-        reservado = nome in presentes_reservados
-
         st.markdown('<div class="presente-card">', unsafe_allow_html=True)
 
-        if valor:
-            st.markdown(f"### {nome}")
-            st.markdown(f"💲 R$ {valor:.2f}")
-            st.markdown(f"[Ver produto]({link})")
-        else:
+        # ================= PIX (SEM RESERVA) =================
+        if nome == "💰 Pix":
+
             st.markdown(f"### {nome}")
             st.markdown("Escolha qualquer valor 💛")
 
-        if reservado:
-            st.error("❌ Já reservado")
+            if st.button("💳 Enviar Pix", key="pix"):
+
+                sheet.append_row([
+                    st.session_state.nome,
+                    st.session_state.acompanhante,
+                    st.session_state.presenca,
+                    "Pix",
+                    datetime.now().strftime("%d/%m/%Y %H:%M")
+                ])
+
+                st.session_state.page = "thanks"
+                st.rerun()
+
+        # ================= OUTROS PRESENTES =================
         else:
-            if st.session_state.presente_selecionado == nome:
 
-                st.warning("⚠️ Clique abaixo para confirmar a reserva")
+            reservado = nome in presentes_reservados
 
-                if st.button(f"🎉 Confirmar reserva de {nome}", key=f"confirmar_{nome}", type="secondary"):
+            st.markdown(f"### {nome}")
+            st.markdown(f"💲 R$ {valor:.2f}")
+            st.markdown(f"[Ver produto]({link})")
 
-                    dados_atualizados = sheet.get_all_records()
-                    df_check = pd.DataFrame(dados_atualizados)
-
-                    if not df_check.empty and nome in df_check.get("Presente Reservado", []).values:
-                        st.error("Esse presente acabou de ser reservado por outra pessoa 😢")
-                    else:
-                        sheet.append_row([
-                            st.session_state.nome,
-                            st.session_state.acompanhante,
-                            st.session_state.presenca,
-                            nome,
-                            datetime.now().strftime("%d/%m/%Y %H:%M")
-                        ])
-
-                        st.session_state.presente_selecionado = None
-                        st.session_state.page = "thanks"
-                        st.rerun()
-
+            if reservado:
+                st.error("❌ Já reservado")
             else:
-                if st.button(f"🎁 Reservar {nome}", key=nome):
-                    st.session_state.presente_selecionado = nome
-                    st.rerun()
+                if st.session_state.presente_selecionado == nome:
+
+                    st.warning("⚠️ Clique abaixo para confirmar a reserva")
+
+                    if st.button(f"🎉 Confirmar reserva de {nome}", key=f"confirmar_{nome}", type="secondary"):
+
+                        dados_atualizados = sheet.get_all_records()
+                        df_check = pd.DataFrame(dados_atualizados)
+
+                        if not df_check.empty and nome in df_check.get("Presente Reservado", []).values:
+                            st.error("Esse presente acabou de ser reservado 😢")
+                        else:
+                            sheet.append_row([
+                                st.session_state.nome,
+                                st.session_state.acompanhante,
+                                st.session_state.presenca,
+                                nome,
+                                datetime.now().strftime("%d/%m/%Y %H:%M")
+                            ])
+
+                            st.session_state.presente_selecionado = None
+                            st.session_state.page = "thanks"
+                            st.rerun()
+
+                else:
+                    if st.button(f"🎁 Reservar {nome}", key=nome):
+                        st.session_state.presente_selecionado = nome
+                        st.rerun()
 
         st.markdown('</div>', unsafe_allow_html=True)
 
