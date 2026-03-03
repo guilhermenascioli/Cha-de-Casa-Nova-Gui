@@ -151,7 +151,7 @@ elif st.session_state.page == "gifts":
     ("Air Fryer", 404.00, "https://www.mercadolivre.com.br/fritadeira-e-forno-style-oven-fry-10-litros-elgin-3-em1-cor-preto/p/MLB51323242"),
     ("Cama Box - Baú", 399.00, "https://www.mercadolivre.com.br/cama-box-bau-casal-44x138x188cm-couro-branco/p/MLB26186586"),
     ("Jogo de Cama", 287.90, "https://www.zelo.com.br/jogo-de-cama-zelo-hotel-casal-percal-400-fios-liso-p1000244"),
-    ("Jogo De panelas", 251.99, "https://www.casasbahia.com.br/jogo-de-panela-de-inducao-7-pecas"),
+    ("Jogo De panelas", 277.40, "https://www.mercadolivre.com.br/jogo-de-panelas-mimo-style-fundo-triplo-induco-5-pecas-cor-bege/p/MLB35490890?pdp_filters=item_id:MLB5219507672&matt_tool=68281196&matt_internal_campaign_id=355305595&matt_word=&matt_source=google&matt_campaign_id=23048606145&matt_ad_group_id=189911819966&matt_match_type=&matt_network=g&matt_device=c&matt_creative=791291032969&matt_keyword=&matt_ad_position=&matt_ad_type=pla&matt_merchant_id=5649602495&matt_product_id=MLB5219507672&matt_product_partition_id=2458687813826&matt_target_id=aud-1966490908987:pla-2458687813826&cq_src=google_ads&cq_cmp=23048606145&cq_net=g&cq_plt=gp&cq_med=pla&gad_source=1&gad_campaignid=23048606145&gbraid=0AAAAAD93qcDtzoZTNRrooZ35lTqRptVgb&gclid=CjwKCAiAqprNBhB6EiwAMe3yhkWLyZn1nhieQiV0jD0iatMDeT4UQUGN8S-_ap2XdU_b1hWrUDGfBxoCdJkQAvD_BwE"),
     ("Jogo Toalha", 199.00, "https://www.casadatoalha.com.br/products/jogo-de-toalha-essence-5-pecas-cor-off-grafite"),
     ("Colcha Casal", 191.90, "https://www.zelo.com.br/colcha-chamonix-casal-com-2-porta-travesseiros"),
     ("Panela de Pressão", 189.91, "https://m.magazineluiza.com.br/panela-de-pressao-brinox-42l-bege-vanilla"),
@@ -172,11 +172,11 @@ elif st.session_state.page == "gifts":
     ("Nicho de Parede Sobrepor", 54.00, "https://www.amazon.com.br/Sobrepor-28cmx40cm-Arquitech"),
     ("Kit Utensílios Inox de Cozinha", 49.98, "https://www.amazon.com.br/Kit-Utens%C3%ADlios-Inox-Cozinha-Gourmet"),
     ("Jarra de vidro", 49.92, "https://www.amazon.com.br/Diamond-Jarra-Sodo-C%C3%A1lcico"),
-    ("Kit Abridor de Vinho", 48.90, "https://www.amazon.com.br/ABRIDOR-EL%C3%89TRICO-ACESS%C3%93RIOS"),
-    ("Kit Caipirinha", 44.90, "https://www.amazon.com.br/Caipirinha-Drinks-Coqueteleira"),
-    ("Kit Utensílios de Silicone", 39.70, "https://www.amazon.com.br/Kit-Premium-Utens%C3%ADlios-Cozinha-Silicone"),
-    ("Suporte Papel Higiênico", 36.97, "https://www.amazon.com.br/Higi%C3%AAnico-Prateleira-Inoxid%C3%A1vel"),
-    ("Kit Pano de Prato", 37.90, "https://www.amazon.com.br/Panos-Listrado-Felpudo-Cozinha-Algodão"),
+    ("Kit Abridor de Vinho", 45.99, "https://www.amazon.com.br/ABRIDOR-EL%C3%89TRICO-ACESS%C3%93RIOS-ROLHAS-DECANTER/dp/B0BQH4KC3N/ref=sr_1_6?crid=SN1DV6WPE99R&dib=eyJ2IjoiMSJ9.1Fgvr5sIZ9GxWnjVHp1uH5Q4uo7htStUoV5olLhzLq5tI8l3RjVgRGnYdu3R-vASAi6k14PNL55PDhFTQ51sTvhfbr0RSTNzoCjgfzW5YvxPem8xmF-tpVbk812-Pn0SZiKjdGmqJIb6xHlTBWIfJy2K_xSWBE775Dsffp_SG7MoGLDw4uvq_p2VLEYxjeOPmfberZeSqyYUgikdrrMEk2iaoGcKAwjt9TLdxvzRxrk.iKI_rLQgrTXmQwmCJDrE_xvFbdDJa9HY_0_IsvDriIA&dib_tag=se&keywords=abridor+de+vinho&qid=1772545766&s=kitchen&sprefix=abridor+de+%2Ckitchen%2C185&sr=1-6&ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9"),
+    ("Kit Caipirinha", 39.90, "https://www.amazon.com.br/Caipirinha-Drinks-Coqueteleira-Dosador-Socador/dp/B09C6MZ2N8/ref=sr_1_6?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=RY3FFS5HTJUP&dib=eyJ2IjoiMSJ9.Rp5RRNASBKPgA9oPgpXBRQFSWmK6hJa-5F4FjAXymlK8cV1CYj-nGvgmSwGSOYJ82P07kzTi-0ylf_uJSHpA4wUos-qVF0WJm8u4JCo6CVOGepBwCSRJKusvEn174Cwfww9Elg4aw2rdeX7rL46XH0hUQz27l-2Wp0771ml9LnApBOo6Rfk8LUitjoJ48VjUePzZKzKNN_dL6nppF-zdkeBaUW1LnKWgKrCoj5qNe7s.owD_Juvo93Dx1mGBtkdY-zQGyowdodL9c0Ku9osUocI&dib_tag=se&keywords=kit+caipirinha&qid=1772545677&s=kitchen&sprefix=kit+caipirin%2Ckitchen%2C179&sr=1-6"),
+    ("Kit Utensílios de Silicone", 39.70, "https://www.amazon.com.br/Kit-Premium-Utens%C3%ADlios-Cozinha-Silicone/dp/B0F6YT4VHP?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=A3EYS3YI88WD0A"),
+    ("Suporte Papel Higiênico", 37.97, "https://www.amazon.com.br/Higi%C3%AAnico-Prateleira-Inoxid%C3%A1vel-Instala%C3%A7%C3%A3o-Banheiro/dp/B0F5C5M1LW/ref=sr_1_9?dib=eyJ2IjoiMSJ9.tXVx9JpmX_BHf-ORsXogtpW0Ke3CwOqBTI4zYHVPT6gs5AH--OCxZv5KHbqnH8GI0ckbRSgjk4rPOEYYFY3z0lc0JR6DQN7VQDuWqY-i599VAHgHgcy8QPzsFBKUEjKqmAc4F9Omnkb7hAUf0r4WxvoNwUq1b7sT2mI9oqegS-KBr_EYfJdtn2nKvHh6fPUkiF2sWMc8eyUWFTH8PDHrbZ71BhAOM0dAjZJZlmVzljEa6ZfRuXAg3BiJvcQbSXIJYjoE7SQ16bKemU8LudAv_r5DOrDhC_FtZSvS29YkFiE.2ZNyS2QMiJwhvHrQFk8iKHTXtgoi01_tr-LGEwdQ1tI&dib_tag=se&keywords=suporte+papel+higienico&qid=1772545595&sr=8-9"),
+    ("Kit Pano de Prato", 37.90, "https://www.amazon.com.br/Panos-Listrado-Felpudo-Cozinha-Algod%C3%A3o/dp/B0CH3QXD8V?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=A2AWA4J8IWDR3I"),
 ]
 
     df = load_data()
